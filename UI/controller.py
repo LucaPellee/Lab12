@@ -12,16 +12,36 @@ class Controller:
         self._listCountry = []
 
     def fillDD(self):
-        pass
+        listaAnni = self._model.getYears()
+        for a in listaAnni:
+            self._view.ddyear.options.append(ft.dropdown.Option(a))
+
+        listaCountry = self._model.getCountries()
+        for c in listaCountry:
+            self._view.ddcountry.options.append(ft.dropdown.Option(c))
+        self._view.update_page()
 
 
     def handle_graph(self, e):
-        pass
+        anno = self._view.ddyear.value
+        country = self._view.ddcountry.value
+        self._model.creaGrafo(anno, country)
+        nNodes = self._model.getNumNodes()
+        nEdges = self._model.getNumEdges()
+        self._view.txt_result.controls.clear()
+        self._view.txt_result.controls.append(ft.Text(f"Numero  di vertici: {nNodes}"))
+        self._view.txt_result.controls.append(ft.Text(f"Numero di archi: {nEdges}"))
+        self._view.update_page()
 
 
 
     def handle_volume(self, e):
-        pass
+        self._view.txtOut2.controls.clear()
+        dictVol = self._model.trovaVolume()
+        for k, v in dictVol.items():  # k è la chiave, v è il valore
+            self._view.txtOut2.controls.append(ft.Text(f"{k} -- {v}"))
+        self._view.update_page()
+
 
 
     def handle_path(self, e):
