@@ -45,4 +45,17 @@ class Controller:
 
 
     def handle_path(self, e):
-        pass
+        self._valoreNum = self._view.txtN.value
+        try:
+            numTratte = int(self._valoreNum)
+        except ValueError:
+            self._view.create_alert("Inserire valore numerico")
+        if numTratte < 2:
+            self._view.create_alert("Il valore deve essere almeno 2")
+            return
+        soluzione, peso = self._model.trovaCammino(numTratte)
+        self._view.txtOut3.controls.clear()
+        self._view.txtOut3.controls.append(ft.Text(f"Peso cammino massimo: {peso}"))
+        for s in soluzione:
+            self._view.txtOut3.controls.append(ft.Text(f"{s[0]} --> {s[1]}: {s[2]['weight']}"))
+        self._view.update_page()

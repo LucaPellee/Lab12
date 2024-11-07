@@ -12,3 +12,6 @@ class Retailer:
 
     def __str__(self):
         return self.Retailer_name
+
+    def __eq__(self, other):
+        return self.Retailer_code == other.Retailer_code
